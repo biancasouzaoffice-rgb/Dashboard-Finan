@@ -49,7 +49,13 @@ def montar_links_whatsapp(mensagem):
 
 
 def render_inicio(erro=""):
-    return render_template("index.html", sabores=SABORES, taxas=TAXAS_ENTREGA, erro=erro)
+    return render_template(
+        "index.html",
+        sabores=SABORES,
+        taxas=TAXAS_ENTREGA,
+        erro=erro,
+        modo_instagram=eh_navegador_instagram(),
+    )
 
 
 def processar_pedido():

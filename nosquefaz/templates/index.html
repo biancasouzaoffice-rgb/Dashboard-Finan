@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nós que faz | Mini empadões artesanais</title>
+    {% if not modo_instagram %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    {% endif %}
     <link rel="stylesheet" href="/static/style.css">
 </head>
-<body>
+<body class="{% if modo_instagram %}instagram-lite{% endif %}">
     <div class="shape shape-1"></div>
     <div class="shape shape-2"></div>
 
@@ -45,6 +47,12 @@
                     <h2>Monte seu pedido</h2>
                     <p>Preencha os dados abaixo para enviar no WhatsApp.</p>
                 </div>
+
+                {% if modo_instagram %}
+                <p class="ig-hint">
+                    Você está no navegador do Instagram. Se travar, toque nos 3 pontos e escolha "Abrir no navegador".
+                </p>
+                {% endif %}
 
                 {% if erro %}
                 <p class="erro">{{ erro }}</p>
@@ -225,7 +233,11 @@
                 return 0;
             }
             const opcao = bairro.options[bairro.selectedIndex];
-            return Number(opcao?.dataset?.taxa) || 0;
+            if (!opcao || !opcao.dataset) {
+                return 0;
+            }
+            const taxa = Number(opcao.dataset.taxa);
+            return Number.isNaN(taxa) ? 0 : taxa;
         }
 
         function atualizarCamposVisiveis() {

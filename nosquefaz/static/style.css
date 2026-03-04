@@ -33,6 +33,19 @@ body {
     overflow-x: hidden;
 }
 
+body.instagram-lite {
+    background: var(--bg);
+}
+
+body.instagram-lite .shape {
+    display: none;
+}
+
+body.instagram-lite * {
+    animation: none !important;
+    transition: none !important;
+}
+
 .shape {
     position: fixed;
     z-index: -1;
@@ -218,6 +231,17 @@ body {
     padding: 12px;
     border-radius: 12px;
     font-weight: 700;
+}
+
+.ig-hint {
+    margin: 14px 0 0;
+    border: 1px solid #e2c196;
+    background: #fff4e3;
+    color: #6a3d21;
+    padding: 10px 12px;
+    border-radius: 12px;
+    font-size: 0.92rem;
+    font-weight: 600;
 }
 
 .form-block {
