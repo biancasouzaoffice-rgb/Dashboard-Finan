@@ -4,7 +4,7 @@ import urllib.parse
 app = Flask(__name__)
 
 WHATSAPP_NUMERO = "5537998122880"
-LINK_ENTRADA = "/nosquefaz"
+LINK_ENTRADA = "/pedido-online"
 
 SABORES = [
     {"id": "carne_sol_creme_alho", "nome": "Carne de sol com creme de alho", "preco": 18.0},
@@ -97,7 +97,7 @@ def processar_pedido():
     total_geral = subtotal + taxa_entrega
 
     mensagem = [
-        "*Pedido - Nós que faz*",
+        "*Novo pedido*",
         "",
         f"*Cliente:* {nome}",
         f"*Data:* {data}",
@@ -154,6 +154,7 @@ def bizflow_copy():
 
 
 @app.route("/nosquefaz", methods=["GET", "POST"])
+@app.route("/pedido-online", methods=["GET", "POST"])
 @app.route("/entrada", methods=["GET", "POST"])
 @app.route("/pedido", methods=["GET", "POST"])
 def entrada():
