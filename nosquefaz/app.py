@@ -155,6 +155,7 @@ def bizflow_copy():
 
 @app.route("/nosquefaz", methods=["GET", "POST"])
 @app.route("/pedido-online", methods=["GET", "POST"])
+@app.route("/app", methods=["GET", "POST"])
 @app.route("/entrada", methods=["GET", "POST"])
 @app.route("/pedido", methods=["GET", "POST"])
 def entrada():

@@ -9,6 +9,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
     {% endif %}
+    <link rel="manifest" href="/static/manifest.webmanifest">
+    <link rel="apple-touch-icon" href="/static/logo.png">
+    <meta name="theme-color" content="#7e2318">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Pedido Online">
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body class="{% if modo_instagram %}instagram-lite{% endif %}">
@@ -40,6 +46,7 @@
 
                 <div class="hero-actions">
                     <a class="btn-primary" href="#pedido">Fazer pedido agora</a>
+                    <button class="btn-secondary hidden" id="install-app" type="button">Instalar app</button>
                     <span class="service-note">PIX e dinheiro - Entrega e retirada</span>
                 </div>
 
@@ -241,6 +248,8 @@
         const totalCompraEl = document.getElementById("total-compra");
         const resumoItensEl = document.getElementById("resumo-itens");
         const qtdInputs = document.querySelectorAll('input[name^="qtd_"]');
+        const installAppBtn = document.getElementById("install-app");
+        let deferredInstallPrompt = null;
 
         function formatarMoeda(valor) {
             return valor.toLocaleString("pt-BR", {
@@ -335,6 +344,39 @@
         qtdInputs.forEach((input) => input.addEventListener("input", atualizarTela));
 
         atualizarTela();
+
+        window.addEventListener("beforeinstallprompt", (event) => {
+            event.preventDefault();
+            deferredInstallPrompt = event;
+            if (installAppBtn) {
+                installAppBtn.classList.remove("hidden");
+            }
+        });
+
+        if (installAppBtn) {
+            installAppBtn.addEventListener("click", async () => {
+                if (!deferredInstallPrompt) {
+                    return;
+                }
+                deferredInstallPrompt.prompt();
+                await deferredInstallPrompt.userChoice;
+                deferredInstallPrompt = null;
+                installAppBtn.classList.add("hidden");
+            });
+        }
+
+        window.addEventListener("appinstalled", () => {
+            deferredInstallPrompt = null;
+            if (installAppBtn) {
+                installAppBtn.classList.add("hidden");
+            }
+        });
+
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("/static/sw.js").catch(() => {});
+            });
+        }
     </script>
 </body>
 </html>

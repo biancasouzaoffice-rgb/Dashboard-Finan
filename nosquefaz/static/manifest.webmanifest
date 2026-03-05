@@ -1,0 +1,23 @@
+{
+  "name": "Pedido Online",
+  "short_name": "Pedido",
+  "description": "Site de pedidos com envio rapido pelo WhatsApp.",
+  "start_url": "/pedido-online",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f4f0e6",
+  "theme_color": "#7e2318",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "/static/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
